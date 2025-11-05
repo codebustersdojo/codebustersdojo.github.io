@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.P.E === region.V.E)
+	if (region.Q.E === region.V.E)
 	{
-		return 'on line ' + region.P.E;
+		return 'on line ' + region.Q.E;
 	}
-	return 'on lines ' + region.P.E + ' through ' + region.V.E;
+	return 'on lines ' + region.Q.E + ' through ' + region.V.E;
 }
 
 
@@ -2724,8 +2724,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		q: func(record.q),
-		Q: record.Q,
-		N: record.N
+		R: record.R,
+		O: record.O
 	}
 });
 
@@ -2994,10 +2994,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.q;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.Q;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.R;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.N) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.O) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3987,7 +3987,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.aW,
 		impl.aU,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.O && impl.O(sendToApp)
+			var divertHrefToApp = impl.P && impl.P(sendToApp)
 			var view = impl.aX;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4062,7 +4062,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		O: function(sendToApp)
+		P: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -6000,9 +6000,10 @@ var $author$project$Interface$Atbash = 2;
 var $author$project$Interface$Baconian = 3;
 var $author$project$Interface$Caesar = 4;
 var $author$project$Interface$Nihilist = 5;
+var $author$project$Interface$Porta = 6;
 var $author$project$Interface$allCiphers = $elm$core$Array$fromList(
 	_List_fromArray(
-		[1, 2, 3, 4, 5]));
+		[1, 2, 3, 4, 5, 6]));
 var $author$project$Alpha$Alpha = $elm$core$Basics$identity;
 var $elm$core$Char$fromCode = _Char_fromCode;
 var $author$project$Alpha$lowerACode = $elm$core$Char$toCode('a');
@@ -6041,13 +6042,12 @@ var $author$project$Affine$encrypt = F2(
 	});
 var $author$project$Affine$encryptLetter = F2(
 	function (params, t) {
-		var cipher = A2($author$project$Affine$encrypt, params, t.T);
 		return {
-			ay: cipher,
-			aG: cipher,
+			ay: A2($author$project$Affine$encrypt, params, t.L),
+			aG: $author$project$Alpha$toStr(t.L),
 			aH: $elm$core$Maybe$Nothing,
 			_: t._,
-			aR: $author$project$Alpha$toStr(t.T)
+			aR: $author$project$Alpha$toStr(t.L)
 		};
 	});
 var $elm$core$Array$length = function (_v0) {
@@ -6104,13 +6104,12 @@ var $author$project$Atbash$encrypt = function (_char) {
 			25 - $author$project$Alpha$toVal(_char)));
 };
 var $author$project$Atbash$encryptLetter = function (t) {
-	var cipher = $author$project$Atbash$encrypt(t.T);
 	return {
-		ay: cipher,
-		aG: cipher,
+		ay: $author$project$Atbash$encrypt(t.L),
+		aG: $author$project$Alpha$toStr(t.L),
 		aH: $elm$core$Maybe$Nothing,
 		_: t._,
-		aR: $author$project$Alpha$toStr(t.T)
+		aR: $author$project$Alpha$toStr(t.L)
 	};
 };
 var $author$project$Atbash$createProblem = F2(
@@ -6176,13 +6175,12 @@ var $author$project$Baconian$encrypt = function (_char) {
 		$author$project$Alpha$toVal(_char));
 };
 var $author$project$Baconian$encryptLetter = function (t) {
-	var cipher = $author$project$Baconian$encrypt(t.T);
 	return {
-		ay: cipher,
-		aG: cipher,
+		ay: $author$project$Baconian$encrypt(t.L),
+		aG: $author$project$Alpha$toStr(t.L),
 		aH: $elm$core$Maybe$Nothing,
 		_: t._,
-		aR: $author$project$Alpha$toStr(t.T)
+		aR: $author$project$Alpha$toStr(t.L)
 	};
 };
 var $author$project$Baconian$createProblem = F2(
@@ -6208,13 +6206,12 @@ var $author$project$Caesar$encrypt = F2(
 	});
 var $author$project$Caesar$encryptLetter = F2(
 	function (offset, t) {
-		var cipher = A2($author$project$Caesar$encrypt, offset, t.T);
 		return {
-			ay: cipher,
-			aG: cipher,
+			ay: A2($author$project$Caesar$encrypt, offset, t.L),
+			aG: $author$project$Alpha$toStr(t.L),
 			aH: $elm$core$Maybe$Nothing,
 			_: t._,
-			aR: $author$project$Alpha$toStr(t.T)
+			aR: $author$project$Alpha$toStr(t.L)
 		};
 	});
 var $author$project$Caesar$maxOffset = 25;
@@ -6465,11 +6462,15 @@ var $author$project$Keyword$getAt = F2(
 					$elm$core$Array$length(cs),
 					idx)));
 	});
-var $author$project$Alpha$eq = F2(
+var $author$project$Alpha$compare = F2(
 	function (_v0, _v1) {
 		var x = _v0;
 		var y = _v1;
-		return _Utils_eq(x, y);
+		return A2($elm$core$Basics$compare, x, y);
+	});
+var $author$project$Alpha$eq = F2(
+	function (x, y) {
+		return 1 === A2($author$project$Alpha$compare, x, y);
 	});
 var $author$project$Polybius$iChar = $author$project$Alpha$fromVal(8);
 var $author$project$ListEx$indexOfHelper = F3(
@@ -6520,7 +6521,7 @@ var $author$project$Polybius$toVal = F2(
 	});
 var $author$project$Polybius$encode = F3(
 	function (p, k, t) {
-		var tVal = A2($author$project$Polybius$toVal, p, t.T);
+		var tVal = A2($author$project$Polybius$toVal, p, t.L);
 		var kVal = A2(
 			$author$project$Polybius$toVal,
 			p,
@@ -6537,10 +6538,10 @@ var $author$project$Nihilist$encryptLetter = F2(
 		return {
 			ay: A2($author$project$Nihilist$encrypt, params, t),
 			aG: $author$project$Alpha$toStr(
-				A2($author$project$Keyword$getAt, params.D, t._)) + ('--' + $author$project$Alpha$toStr(t.T)),
+				A2($author$project$Keyword$getAt, params.D, t._)) + ('--' + $author$project$Alpha$toStr(t.L)),
 			aH: $elm$core$Maybe$Nothing,
 			_: t._,
-			aR: $author$project$Alpha$toStr(t.T)
+			aR: $author$project$Alpha$toStr(t.L)
 		};
 	});
 var $author$project$Data$keywords = $elm$core$Array$fromList(
@@ -6579,7 +6580,7 @@ var $author$project$Nihilist$createProblem = F2(
 		};
 		return {
 			az: 5,
-			aL: 'Nihilist (Polybius Key = ' + ($author$project$Polybius$toKeywordStr(params.K) + (', Keyword = ' + ($author$project$Keyword$toStr(params.D) + ')'))),
+			aL: 'Nihilist (polybius key = ' + ($author$project$Polybius$toKeywordStr(params.K) + (', keyword = ' + ($author$project$Keyword$toStr(params.D) + ')'))),
 			aY: A2(
 				$elm$core$List$map,
 				function (w) {
@@ -6587,6 +6588,55 @@ var $author$project$Nihilist$createProblem = F2(
 						aM: A2(
 							$elm$core$List$map,
 							$author$project$Nihilist$encryptLetter(params),
+							w)
+					};
+				},
+				words)
+		};
+	});
+var $author$project$Alpha$m = $author$project$Alpha$fromVal(12);
+var $author$project$Porta$encrypt = F2(
+	function (params, t) {
+		var offset = function (k) {
+			return ((k / 2) | 0) + 13;
+		}(
+			$author$project$Alpha$toVal(
+				A2($author$project$Keyword$getAt, params.D, t._)));
+		var cVal = $author$project$Alpha$toVal(t.L);
+		var val = (_Utils_cmp(
+			cVal,
+			$author$project$Alpha$toVal($author$project$Alpha$m)) < 1) ? (cVal + offset) : (cVal - offset);
+		var val_ = ((val >= 0) && (val <= 25)) ? val : ((val < 0) ? (val + 13) : (val - 13));
+		return $author$project$Alpha$toStr(
+			$author$project$Alpha$fromVal(val_));
+	});
+var $author$project$Porta$encryptLetter = F2(
+	function (params, t) {
+		return {
+			ay: A2($author$project$Porta$encrypt, params, t),
+			aG: $author$project$Alpha$toStr(
+				A2($author$project$Keyword$getAt, params.D, t._)) + ('--' + $author$project$Alpha$toStr(t.L)),
+			aH: $elm$core$Maybe$Nothing,
+			_: t._,
+			aR: $author$project$Alpha$toStr(t.L)
+		};
+	});
+var $author$project$Porta$createProblem = F2(
+	function (randomInput, words) {
+		var params = {
+			D: $author$project$Keyword$createOrDefault(
+				$author$project$Data$randomKeyword(randomInput.A))
+		};
+		return {
+			az: 6,
+			aL: 'Porta (keyword = ' + ($author$project$Keyword$toStr(params.D) + ')'),
+			aY: A2(
+				$elm$core$List$map,
+				function (w) {
+					return {
+						aM: A2(
+							$elm$core$List$map,
+							$author$project$Porta$encryptLetter(params),
 							w)
 					};
 				},
@@ -6609,7 +6659,7 @@ var $author$project$Maker$getCreateProblemFn = F2(
 			case 5:
 				return $author$project$Nihilist$createProblem;
 			default:
-				return $author$project$Atbash$createProblem;
+				return $author$project$Porta$createProblem;
 		}
 	});
 var $author$project$Maker$randomCreateProblemFn = function (randomInput) {
@@ -6721,7 +6771,7 @@ var $author$project$Token$tokenizeHelper = F4(
 							currentWord,
 							_List_fromArray(
 								[
-									{T: c, _: currentIdx}
+									{L: c, _: currentIdx}
 								])),
 							$temp$output = output;
 						input = $temp$input;
