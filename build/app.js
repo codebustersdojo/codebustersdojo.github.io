@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.R.E === region.W.E)
+	if (region.R.F === region.W.F)
 	{
-		return 'on line ' + region.R.E;
+		return 'on line ' + region.R.F;
 	}
-	return 'on lines ' + region.R.E + ' through ' + region.W.E;
+	return 'on lines ' + region.R.F + ' through ' + region.W.F;
 }
 
 
@@ -1861,9 +1861,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aJ,
+		impl.aL,
+		impl.aY,
 		impl.aV,
-		impl.aT,
 		function() { return function() {} }
 	);
 });
@@ -3947,11 +3947,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aJ,
+		impl.aL,
+		impl.aY,
 		impl.aV,
-		impl.aT,
 		function(sendToApp, initialModel) {
-			var view = impl.aW;
+			var view = impl.aZ;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3983,12 +3983,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aJ,
+		impl.aL,
+		impl.aY,
 		impl.aV,
-		impl.aT,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.Q && impl.Q(sendToApp)
-			var view = impl.aW;
+			var view = impl.aZ;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3996,12 +3996,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.av);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ax);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aU) && (_VirtualDom_doc.title = title = doc.aU);
+				(title !== doc.aX) && (_VirtualDom_doc.title = title = doc.aX);
 			});
 		}
 	);
@@ -4057,8 +4057,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aN;
-	var onUrlRequest = impl.aO;
+	var onUrlChange = impl.aP;
+	var onUrlRequest = impl.aQ;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4078,9 +4078,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ai === next.ai
-							&& curr._ === next._
-							&& curr.af.a === next.af.a
+							&& curr.ak === next.ak
+							&& curr.aa === next.aa
+							&& curr.ah.a === next.ah.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4088,13 +4088,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aJ: function(flags)
+		aL: function(flags)
 		{
-			return A3(impl.aJ, flags, _Browser_getUrl(), key);
+			return A3(impl.aL, flags, _Browser_getUrl(), key);
 		},
-		aW: impl.aW,
-		aV: impl.aV,
-		aT: impl.aT
+		aZ: impl.aZ,
+		aY: impl.aY,
+		aV: impl.aV
 	});
 }
 
@@ -4160,17 +4160,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aG: 'hidden', aw: 'visibilitychange' }
+		? { aI: 'hidden', ay: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aG: 'mozHidden', aw: 'mozvisibilitychange' }
+		? { aI: 'mozHidden', ay: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aG: 'msHidden', aw: 'msvisibilitychange' }
+		? { aI: 'msHidden', ay: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aG: 'webkitHidden', aw: 'webkitvisibilitychange' }
-		: { aG: 'hidden', aw: 'visibilitychange' };
+		? { aI: 'webkitHidden', ay: 'webkitvisibilitychange' }
+		: { aI: 'hidden', ay: 'visibilitychange' };
 }
 
 
@@ -4251,12 +4251,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		am: _Browser_getScene(),
-		ap: {
-			ar: _Browser_window.pageXOffset,
-			as: _Browser_window.pageYOffset,
-			aq: _Browser_doc.documentElement.clientWidth,
-			Z: _Browser_doc.documentElement.clientHeight
+		ao: _Browser_getScene(),
+		ar: {
+			at: _Browser_window.pageXOffset,
+			au: _Browser_window.pageYOffset,
+			as: _Browser_doc.documentElement.clientWidth,
+			_: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4266,8 +4266,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		aq: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		Z: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		as: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		_: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4290,15 +4290,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			am: {
-				aq: node.scrollWidth,
-				Z: node.scrollHeight
+			ao: {
+				as: node.scrollWidth,
+				_: node.scrollHeight
 			},
-			ap: {
-				ar: node.scrollLeft,
-				as: node.scrollTop,
-				aq: node.clientWidth,
-				Z: node.clientHeight
+			ar: {
+				at: node.scrollLeft,
+				au: node.scrollTop,
+				as: node.clientWidth,
+				_: node.clientHeight
 			}
 		};
 	});
@@ -4328,18 +4328,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			am: _Browser_getScene(),
-			ap: {
-				ar: x,
-				as: y,
-				aq: _Browser_doc.documentElement.clientWidth,
-				Z: _Browser_doc.documentElement.clientHeight
+			ao: _Browser_getScene(),
+			ar: {
+				at: x,
+				au: y,
+				as: _Browser_doc.documentElement.clientWidth,
+				_: _Browser_doc.documentElement.clientHeight
 			},
-			aA: {
-				ar: x + rect.left,
-				as: y + rect.top,
-				aq: rect.width,
-				Z: rect.height
+			aC: {
+				at: x + rect.left,
+				au: y + rect.top,
+				as: rect.width,
+				_: rect.height
 			}
 		};
 	});
@@ -4961,7 +4961,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {Y: fragment, _: host, ad: path, af: port_, ai: protocol, aj: query};
+		return {Y: fragment, aa: host, af: path, ah: port_, ak: protocol, al: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5715,15 +5715,15 @@ var $author$project$Main$generateRandomInput = A2(
 	$elm$random$Random$map,
 	function (xs) {
 		return {
-			A: A2(
+			B: A2(
 				$elm$core$Maybe$withDefault,
 				0,
 				A2($elm$core$Array$get, 0, xs)),
-			C: A2(
+			D: A2(
 				$elm$core$Maybe$withDefault,
 				0,
 				A2($elm$core$Array$get, 1, xs)),
-			aH: $elm$core$Array$toList(
+			aJ: $elm$core$Array$toList(
 				A3($elm$core$Array$slice, 2, 102, xs))
 		};
 	},
@@ -5744,7 +5744,7 @@ var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
 		$author$project$Main$Loading,
 		$author$project$Main$newProblemCmd(
-			{ay: 0, aF: false}));
+			{aA: 0, aH: false}));
 };
 var $author$project$Main$KeyDown = function (a) {
 	return {$: 3, a: a};
@@ -5759,7 +5759,7 @@ var $elm$browser$Browser$Events$MySub = F3(
 	});
 var $elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {ae: pids, an: subs};
+		return {ag: pids, ap: subs};
 	});
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
@@ -5991,7 +5991,7 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {X: event, M: key};
+		return {X: event, y: key};
 	});
 var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$browser$Browser$Events$spawn = F3(
@@ -6066,7 +6066,7 @@ var $elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.ae,
+			state.ag,
 			$elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
 		var deadPids = _v0.a;
@@ -6112,7 +6112,7 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.M;
+		var key = _v0.y;
 		var event = _v0.X;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
@@ -6122,7 +6122,7 @@ var $elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _v3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
 		};
-		var messages = A2($elm$core$List$filterMap, toMessage, state.an);
+		var messages = A2($elm$core$List$filterMap, toMessage, state.ap);
 		return A2(
 			$elm$core$Task$andThen,
 			function (_v1) {
@@ -6156,6 +6156,9 @@ var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, 0
 var $author$project$Main$subscriptions = function (_v0) {
 	return $elm$browser$Browser$Events$onKeyDown(
 		A2($elm$json$Json$Decode$map, $author$project$Main$KeyDown, $elm$html$Html$Events$keyCode));
+};
+var $author$project$Main$ProblemLetter = function (a) {
+	return {$: 0, a: a};
 };
 var $author$project$Main$Ready = function (a) {
 	return {$: 1, a: a};
@@ -6207,70 +6210,69 @@ var $author$project$Interface$setGuess = F2(
 	function (guess_, l) {
 		return _Utils_update(
 			l,
-			{aE: guess_});
+			{aG: guess_});
 	});
 var $author$project$Interface$clearGuess = $author$project$Interface$setGuess($elm$core$Maybe$Nothing);
-var $author$project$Interface$Affine = 1;
 var $author$project$Interface$Aristocrat = 2;
-var $author$project$Interface$Atbash = 3;
-var $author$project$Interface$Baconian = 4;
-var $author$project$Interface$Caesar = 5;
-var $author$project$Interface$Nihilist = 6;
-var $author$project$Interface$Porta = 7;
+var $author$project$Interface$AristocratK1 = 3;
+var $author$project$Interface$Affine = 1;
+var $author$project$Interface$Atbash = 4;
+var $author$project$Interface$Baconian = 5;
+var $author$project$Interface$Caesar = 6;
+var $author$project$Interface$Nihilist = 7;
+var $author$project$Interface$Porta = 8;
 var $author$project$Interface$allCiphers = $elm$core$Array$fromList(
 	_List_fromArray(
-		[1, 2, 3, 4, 5, 6, 7]));
-var $author$project$Alpha$Alpha = $elm$core$Basics$identity;
-var $elm$core$Char$fromCode = _Char_fromCode;
-var $author$project$Alpha$lowerACode = $elm$core$Char$toCode('a');
-var $elm$core$Basics$modBy = _Basics_modBy;
-var $author$project$Alpha$fromVal = function (idx) {
-	return $elm$core$Char$fromCode(
-		A2($elm$core$Basics$modBy, 26, idx) + $author$project$Alpha$lowerACode);
+		[1, 2, 3, 4, 5, 6, 7, 8]));
+var $author$project$Key$Key = $elm$core$Basics$identity;
+var $elm$core$Basics$neq = _Utils_notEqual;
+var $author$project$Key$isValidSubstitution = function (_v0) {
+	var p = _v0.a;
+	var c = _v0.b;
+	return !_Utils_eq(p, c);
 };
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
-var $author$project$Alpha$toStr = function (_v0) {
-	var c = _v0;
-	return $elm$core$String$fromChar(c);
-};
-var $author$project$Alpha$lowerZCode = $elm$core$Char$toCode('z');
-var $elm$core$Char$toLower = _Char_toLower;
-var $author$project$Alpha$toValHelper = function (c) {
-	var code = $elm$core$Char$toCode(
-		$elm$core$Char$toLower(c));
-	return ((_Utils_cmp(code, $author$project$Alpha$lowerACode) > -1) && (_Utils_cmp(code, $author$project$Alpha$lowerZCode) < 1)) ? $elm$core$Maybe$Just(code - $author$project$Alpha$lowerACode) : $elm$core$Maybe$Nothing;
-};
-var $author$project$Alpha$toVal = function (_v0) {
-	var c = _v0;
+var $elm$core$Tuple$pair = F2(
+	function (a, b) {
+		return _Utils_Tuple2(a, b);
+	});
+var $author$project$Key$tryCreateAt = F2(
+	function (idx, ps) {
+		var cs = _Utils_ap(
+			A2($elm$core$List$range, idx, 25),
+			A2($elm$core$List$range, 0, idx - 1));
+		var mappings = A3($elm$core$List$map2, $elm$core$Tuple$pair, ps, cs);
+		return A2($elm$core$List$all, $author$project$Key$isValidSubstitution, mappings) ? $elm$core$Maybe$Just(
+			$elm$core$Dict$fromList(mappings)) : $elm$core$Maybe$Nothing;
+	});
+var $author$project$Key$allMappings = function (cs) {
 	return A2(
-		$elm$core$Maybe$withDefault,
-		-1,
-		$author$project$Alpha$toValHelper(c));
+		$elm$core$List$filterMap,
+		function (idx) {
+			return A2($author$project$Key$tryCreateAt, idx, cs);
+		},
+		A2($elm$core$List$range, 0, 25));
 };
-var $author$project$Affine$encrypt = F2(
-	function (params, _char) {
-		return $author$project$Alpha$toStr(
-			$author$project$Alpha$fromVal(
-				(params.A * $author$project$Alpha$toVal(_char)) + params.C));
+var $author$project$ListEx$itemAt = F2(
+	function (idx, items) {
+		itemAt:
+		while (true) {
+			if (!items.b) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var x = items.a;
+				var xs = items.b;
+				if (!idx) {
+					return $elm$core$Maybe$Just(x);
+				} else {
+					var $temp$idx = idx - 1,
+						$temp$items = xs;
+					idx = $temp$idx;
+					items = $temp$items;
+					continue itemAt;
+				}
+			}
+		}
 	});
-var $author$project$Affine$encryptLetter = F2(
-	function (params, t) {
-		return {
-			ax: A2($author$project$Affine$encrypt, params, t.L),
-			aD: $author$project$Alpha$toStr(t.L),
-			aE: $elm$core$Maybe$Nothing,
-			aa: t.aa,
-			aQ: $author$project$Alpha$toStr(t.L)
-		};
-	});
-var $elm$core$Array$length = function (_v0) {
-	var len = _v0.a;
-	return len;
-};
-var $author$project$Affine$maxValueOfB = 25;
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Extra$randomInt = F3(
 	function (rand, lo, hi) {
@@ -6280,145 +6282,28 @@ var $author$project$Extra$randomIdx = F2(
 	function (rand, length) {
 		return A3($author$project$Extra$randomInt, rand, 0, length - 1);
 	});
-var $author$project$Affine$valuesOfA = $elm$core$Array$fromList(
-	_List_fromArray(
-		[1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]));
-var $author$project$Affine$createProblem = F2(
-	function (randomInput, words) {
-		var params = {
-			A: A2(
-				$elm$core$Maybe$withDefault,
-				1,
-				function (idx) {
-					return A2($elm$core$Array$get, idx, $author$project$Affine$valuesOfA);
-				}(
+var $author$project$Key$createHelper = F2(
+	function (randomInput, shuffled) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			$elm$core$Dict$empty,
+			function (ms) {
+				return A2(
+					$author$project$ListEx$itemAt,
 					A2(
 						$author$project$Extra$randomIdx,
-						randomInput.A,
-						$elm$core$Array$length($author$project$Affine$valuesOfA)))),
-			C: A3($author$project$Extra$randomInt, randomInput.C, 1, $author$project$Affine$maxValueOfB)
-		};
-		return {
-			ay: 1,
-			aK: 'Affine (A = ' + ($elm$core$String$fromInt(params.A) + (', B = ' + ($elm$core$String$fromInt(params.C) + ')'))),
-			aX: A2(
-				$elm$core$List$map,
-				function (w) {
-					return {
-						aL: A2(
-							$elm$core$List$map,
-							$author$project$Affine$encryptLetter(params),
-							w)
-					};
-				},
-				words)
-		};
+						randomInput.B,
+						$elm$core$List$length(ms)),
+					ms);
+			}(
+				$author$project$Key$allMappings(shuffled)));
 	});
-var $author$project$Key$Key = $elm$core$Basics$identity;
-var $elm$core$List$isEmpty = function (xs) {
-	if (!xs.b) {
-		return true;
-	} else {
-		return false;
-	}
-};
-var $author$project$ListEx$partitionAtHelper = F3(
-	function (idx, items, before) {
-		partitionAtHelper:
-		while (true) {
-			if (!items.b) {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var x = items.a;
-				var xs = items.b;
-				if (!idx) {
-					return $elm$core$Maybe$Just(
-						_Utils_Tuple3(
-							$elm$core$List$reverse(before),
-							x,
-							xs));
-				} else {
-					var $temp$idx = idx - 1,
-						$temp$items = xs,
-						$temp$before = A2($elm$core$List$cons, x, before);
-					idx = $temp$idx;
-					items = $temp$items;
-					before = $temp$before;
-					continue partitionAtHelper;
-				}
-			}
-		}
+var $elm$core$Set$Set_elm_builtin = $elm$core$Basics$identity;
+var $elm$core$Set$insert = F2(
+	function (key, _v0) {
+		var dict = _v0;
+		return A3($elm$core$Dict$insert, key, 0, dict);
 	});
-var $author$project$ListEx$partitionAt = F2(
-	function (idx, items) {
-		return (idx >= 0) ? A3($author$project$ListEx$partitionAtHelper, idx, items, _List_Nil) : $elm$core$Maybe$Nothing;
-	});
-var $elm$core$Dict$sizeHelp = F2(
-	function (n, dict) {
-		sizeHelp:
-		while (true) {
-			if (dict.$ === -2) {
-				return n;
-			} else {
-				var left = dict.d;
-				var right = dict.e;
-				var $temp$n = A2($elm$core$Dict$sizeHelp, n + 1, right),
-					$temp$dict = left;
-				n = $temp$n;
-				dict = $temp$dict;
-				continue sizeHelp;
-			}
-		}
-	});
-var $elm$core$Dict$size = function (dict) {
-	return A2($elm$core$Dict$sizeHelp, 0, dict);
-};
-var $author$project$Key$createHelper = F3(
-	function (randoms, remaining, output) {
-		if ($elm$core$List$isEmpty(remaining)) {
-			return $elm$core$Maybe$Just(output);
-		} else {
-			if (!randoms.b) {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var r = randoms.a;
-				var rs = randoms.b;
-				return A2(
-					$elm$core$Maybe$andThen,
-					function (_v1) {
-						var before = _v1.a;
-						var x = _v1.b;
-						var after = _v1.c;
-						return A3(
-							$author$project$Key$createHelper,
-							rs,
-							_Utils_ap(before, after),
-							A3(
-								$elm$core$Dict$insert,
-								x,
-								$elm$core$Dict$size(output),
-								output));
-					},
-					function (idx) {
-						return A2($author$project$ListEx$partitionAt, idx, remaining);
-					}(
-						A2(
-							$author$project$Extra$randomIdx,
-							r,
-							$elm$core$List$length(remaining))));
-			}
-		}
-	});
-var $author$project$Key$create = function (randomInput) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		$elm$core$Dict$empty,
-		A3(
-			$author$project$Key$createHelper,
-			randomInput.aH,
-			A2($elm$core$List$range, 0, 25),
-			$elm$core$Dict$empty));
-};
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -6450,6 +6335,244 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
+var $elm$core$Dict$member = F2(
+	function (key, dict) {
+		var _v0 = A2($elm$core$Dict$get, key, dict);
+		if (!_v0.$) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var $elm$core$Set$member = F2(
+	function (key, _v0) {
+		var dict = _v0;
+		return A2($elm$core$Dict$member, key, dict);
+	});
+var $author$project$ListEx$dedupeHelper = F3(
+	function (input, seen, output) {
+		dedupeHelper:
+		while (true) {
+			if (!input.b) {
+				return output;
+			} else {
+				var x = input.a;
+				var xs = input.b;
+				if (A2($elm$core$Set$member, x, seen)) {
+					var $temp$input = xs,
+						$temp$seen = seen,
+						$temp$output = output;
+					input = $temp$input;
+					seen = $temp$seen;
+					output = $temp$output;
+					continue dedupeHelper;
+				} else {
+					var $temp$input = xs,
+						$temp$seen = A2($elm$core$Set$insert, x, seen),
+						$temp$output = _Utils_ap(
+						output,
+						_List_fromArray(
+							[x]));
+					input = $temp$input;
+					seen = $temp$seen;
+					output = $temp$output;
+					continue dedupeHelper;
+				}
+			}
+		}
+	});
+var $elm$core$Set$empty = $elm$core$Dict$empty;
+var $author$project$ListEx$dedupe = function (items) {
+	return A3($author$project$ListEx$dedupeHelper, items, $elm$core$Set$empty, _List_Nil);
+};
+var $author$project$Data$keywords = $elm$core$Array$fromList(
+	_List_fromArray(
+		['Add', 'Auth', 'Bits', 'Byte', 'Book', 'Box', 'Break', 'Brute', 'Bugs', 'Caesar', 'Cast', 'Chain', 'Char', 'Code', 'Con', 'Cover', 'Crack', 'Cross', 'Cube', 'Cycle', 'Data', 'Deck', 'Decode', 'Deep', 'DES', 'Digit', 'Disk', 'Div', 'Door', 'ECB', 'Encode', 'Enigma', 'Entry', 'Fax', 'Field', 'Figure', 'File', 'Gate', 'Hash', 'Hide', 'Hill', 'Hop', 'IV', 'Jazz', 'Jitter', 'Key', 'Keys', 'Layer', 'Len', 'Line', 'Link', 'Log', 'Logic', 'Loop', 'MAC', 'Map', 'Mark', 'Math', 'Meet', 'Melon', 'Mode', 'Mod', 'Mono', 'Msg', 'Nil', 'Nix', 'Noise', 'Nonce', 'Null', 'Pad', 'Pass', 'Pipe', 'Plan', 'Poly', 'Porta', 'Prep', 'Pub', 'RSA', 'Run', 'Rune', 'Salt', 'Scram', 'Seal', 'Sec', 'Secret', 'Send', 'Shift', 'Sign', 'Spy', 'Sub', 'Suite', 'Sync', 'Sym', 'Text', 'Trap', 'Vail', 'XOR', 'Zero', 'AES', 'Arc', 'Args', 'Atom', 'Band', 'Base', 'Batch', 'Bind', 'Blob', 'Block', 'Cipher', 'Close', 'Cloud', 'Combo', 'Comp', 'Core', 'Crc', 'Curve', 'Diffie', 'Digest', 'Diff', 'ECC', 'End', 'Engage', 'Equal', 'Evt', 'Flow', 'Func', 'Gamma', 'Gen', 'Hand', 'Head', 'Hex', 'Info', 'Input', 'Inte', 'Ip', 'Item', 'Join', 'Jump', 'Kb', 'Lck', 'Lead', 'Left', 'List', 'Lock', 'Mask', 'Max', 'Min', 'Mix', 'Msgid', 'Net', 'New', 'Next', 'Node', 'Open', 'Output', 'Pair', 'Param', 'Part', 'Path', 'Perm', 'Pin', 'Post', 'Priv', 'Proc', 'Prot', 'Prng', 'Psk', 'Pto', 'Rand', 'Recv', 'Reg', 'Rem', 'Rnd', 'Root', 'Seed', 'Select', 'Semi', 'Sha', 'Skip', 'Slice', 'Slot', 'Src', 'Start', 'Step', 'Stop', 'Tag', 'Tls', 'Token', 'Topo', 'Tup', 'Type', 'Udp', 'Unic', 'Url', 'Val', 'Var', 'Vector', 'Verify', 'View', 'Void', 'Wan', 'Word']));
+var $elm$core$Array$length = function (_v0) {
+	var len = _v0.a;
+	return len;
+};
+var $author$project$Data$randomKeyword = function (r) {
+	var k = A2(
+		$elm$core$Maybe$withDefault,
+		'key',
+		function (i) {
+			return A2($elm$core$Array$get, i, $author$project$Data$keywords);
+		}(
+			A2(
+				$author$project$Extra$randomIdx,
+				r,
+				$elm$core$Array$length($author$project$Data$keywords))));
+	return k;
+};
+var $author$project$Alpha$lowerACode = $elm$core$Char$toCode('a');
+var $author$project$Alpha$lowerZCode = $elm$core$Char$toCode('z');
+var $elm$core$Char$toLower = _Char_toLower;
+var $author$project$Alpha$toValHelper = function (c) {
+	var code = $elm$core$Char$toCode(
+		$elm$core$Char$toLower(c));
+	return ((_Utils_cmp(code, $author$project$Alpha$lowerACode) > -1) && (_Utils_cmp(code, $author$project$Alpha$lowerZCode) < 1)) ? $elm$core$Maybe$Just(code - $author$project$Alpha$lowerACode) : $elm$core$Maybe$Nothing;
+};
+var $author$project$Alpha$toVal = function (_v0) {
+	var c = _v0;
+	return A2(
+		$elm$core$Maybe$withDefault,
+		-1,
+		$author$project$Alpha$toValHelper(c));
+};
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var $elm$core$String$foldr = _String_foldr;
+var $elm$core$String$toList = function (string) {
+	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
+};
+var $elm$core$Char$toUpper = _Char_toUpper;
+var $elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $author$project$Alpha$Alpha = $elm$core$Basics$identity;
+var $author$project$Alpha$parse = function (c) {
+	return $elm$core$Char$isAlpha(c) ? $elm$core$Maybe$Just(
+		$elm$core$Char$toLower(c)) : $elm$core$Maybe$Nothing;
+};
+var $author$project$Token$tokenizeHelper = F4(
+	function (input, currentIdx, currentWord, output) {
+		tokenizeHelper:
+		while (true) {
+			if (!input.b) {
+				return $elm$core$List$isEmpty(currentWord) ? output : _Utils_ap(
+					output,
+					_List_fromArray(
+						[currentWord]));
+			} else {
+				if (' ' === input.a) {
+					var xs = input.b;
+					if (!$elm$core$List$isEmpty(currentWord)) {
+						var $temp$input = xs,
+							$temp$currentIdx = currentIdx,
+							$temp$currentWord = _List_Nil,
+							$temp$output = _Utils_ap(
+							output,
+							_List_fromArray(
+								[currentWord]));
+						input = $temp$input;
+						currentIdx = $temp$currentIdx;
+						currentWord = $temp$currentWord;
+						output = $temp$output;
+						continue tokenizeHelper;
+					} else {
+						var $temp$input = xs,
+							$temp$currentIdx = currentIdx,
+							$temp$currentWord = _List_Nil,
+							$temp$output = output;
+						input = $temp$input;
+						currentIdx = $temp$currentIdx;
+						currentWord = $temp$currentWord;
+						output = $temp$output;
+						continue tokenizeHelper;
+					}
+				} else {
+					var x = input.a;
+					var xs = input.b;
+					var _v1 = $author$project$Alpha$parse(x);
+					if (_v1.$ === 1) {
+						var $temp$input = xs,
+							$temp$currentIdx = currentIdx,
+							$temp$currentWord = currentWord,
+							$temp$output = output;
+						input = $temp$input;
+						currentIdx = $temp$currentIdx;
+						currentWord = $temp$currentWord;
+						output = $temp$output;
+						continue tokenizeHelper;
+					} else {
+						var c = _v1.a;
+						var $temp$input = xs,
+							$temp$currentIdx = currentIdx + 1,
+							$temp$currentWord = _Utils_ap(
+							currentWord,
+							_List_fromArray(
+								[
+									{M: c, ab: currentIdx}
+								])),
+							$temp$output = output;
+						input = $temp$input;
+						currentIdx = $temp$currentIdx;
+						currentWord = $temp$currentWord;
+						output = $temp$output;
+						continue tokenizeHelper;
+					}
+				}
+			}
+		}
+	});
+var $author$project$Token$tokenize = function (str) {
+	return function (input) {
+		return A4($author$project$Token$tokenizeHelper, input, 0, _List_Nil, _List_Nil);
+	}(
+		A2(
+			$elm$core$List$map,
+			$elm$core$Char$toUpper,
+			A2(
+				$elm$core$List$filter,
+				function (c) {
+					return $elm$core$Char$isAlpha(c) || (c === ' ');
+				},
+				$elm$core$String$toList(str))));
+};
+var $author$project$Token$tokenizeWord = function (str) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		_List_Nil,
+		$elm$core$List$head(
+			$author$project$Token$tokenize(str)));
+};
+var $author$project$Key$createK1 = function (randomInput) {
+	return A2(
+		$author$project$Key$createHelper,
+		randomInput,
+		$author$project$ListEx$dedupe(
+			function (xs) {
+				return _Utils_ap(
+					xs,
+					A2($elm$core$List$range, 0, 25));
+			}(
+				A2(
+					$elm$core$List$map,
+					function (t) {
+						return $author$project$Alpha$toVal(t.M);
+					},
+					$author$project$Token$tokenizeWord(
+						$author$project$Data$randomKeyword(randomInput.B))))));
+};
+var $elm$core$Char$fromCode = _Char_fromCode;
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $author$project$Alpha$fromVal = function (idx) {
+	return $elm$core$Char$fromCode(
+		A2($elm$core$Basics$modBy, 26, idx) + $author$project$Alpha$lowerACode);
+};
 var $author$project$Key$encode = F2(
 	function (plainText, _v0) {
 		var d = _v0;
@@ -6462,40 +6585,293 @@ var $author$project$Key$encode = F2(
 				}(
 					$author$project$Alpha$toVal(plainText))));
 	});
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $author$project$Alpha$toStr = function (_v0) {
+	var c = _v0;
+	return $elm$core$String$fromChar(c);
+};
 var $author$project$Aristocrat$encrypt = F2(
 	function (params, _char) {
 		return $author$project$Alpha$toStr(
-			A2($author$project$Key$encode, _char, params.M));
+			A2($author$project$Key$encode, _char, params.y));
 	});
 var $author$project$Aristocrat$encryptLetter = F2(
 	function (params, t) {
 		return {
-			ax: A2($author$project$Aristocrat$encrypt, params, t.L),
-			aD: $author$project$Alpha$toStr(t.L),
-			aE: $elm$core$Maybe$Nothing,
-			aa: t.aa,
-			aQ: $author$project$Alpha$toStr(t.L)
+			az: A2($author$project$Aristocrat$encrypt, params, t.M),
+			aF: $author$project$Alpha$toStr(t.M),
+			aG: $elm$core$Maybe$Nothing,
+			ab: t.ab,
+			aS: $author$project$Alpha$toStr(t.M)
 		};
 	});
-var $author$project$Aristocrat$createProblem = F2(
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $elm$core$List$concatMap = F2(
+	function (f, list) {
+		return $elm$core$List$concat(
+			A2($elm$core$List$map, f, list));
+	});
+var $author$project$DictEx$getOrZero = F2(
+	function (targetKey, dict) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			0,
+			A2($elm$core$Dict$get, targetKey, dict));
+	});
+var $author$project$DictEx$increment = F2(
+	function (targetKey, dict) {
+		return function (val) {
+			return A3($elm$core$Dict$insert, targetKey, val + 1, dict);
+		}(
+			A2($author$project$DictEx$getOrZero, targetKey, dict));
+	});
+var $author$project$WordEx$frequencies = function (ws) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (l, freq) {
+				return {
+					az: A2($author$project$DictEx$increment, l.az, freq.az),
+					aS: A2($author$project$DictEx$increment, l.aS, freq.aS)
+				};
+			}),
+		{az: $elm$core$Dict$empty, aS: $elm$core$Dict$empty},
+		A2(
+			$elm$core$List$concatMap,
+			function (w) {
+				return w.aN;
+			},
+			ws));
+};
+var $author$project$Alpha$fromValToStr = function (val) {
+	return $author$project$Alpha$toStr(
+		$author$project$Alpha$fromVal(val));
+};
+var $author$project$Key$list = function (_v0) {
+	var d = _v0;
+	var reverseMap = $elm$core$Dict$fromList(
+		A2(
+			$elm$core$List$map,
+			function (_v1) {
+				var k = _v1.a;
+				var v = _v1.b;
+				return _Utils_Tuple2(v, k);
+			},
+			$elm$core$Dict$toList(d)));
+	return A2(
+		$elm$core$List$map,
+		function (idx) {
+			var plainVal = A2($author$project$DictEx$getOrZero, idx, reverseMap);
+			var cipherVal = idx;
+			return {
+				az: $author$project$Alpha$fromValToStr(cipherVal),
+				aF: $author$project$Alpha$fromValToStr(plainVal),
+				aG: $elm$core$Maybe$Nothing,
+				ab: idx,
+				aS: $author$project$Alpha$fromValToStr(plainVal)
+			};
+		},
+		A2($elm$core$List$range, 0, 25));
+};
+var $author$project$Aristocrat$createK1Problem = F2(
 	function (randomInput, words) {
 		var params = {
-			M: $author$project$Key$create(randomInput)
+			y: $author$project$Key$createK1(randomInput)
+		};
+		var words_ = A2(
+			$elm$core$List$map,
+			function (w) {
+				return {
+					aN: A2(
+						$elm$core$List$map,
+						$author$project$Aristocrat$encryptLetter(params),
+						w)
+				};
+			},
+			words);
+		return {
+			aA: 3,
+			aM: 'Aristocrat (K1)',
+			aW: $elm$core$Maybe$Just(
+				{
+					Z: $author$project$WordEx$frequencies(words_),
+					ac: $author$project$Key$list(params.y)
+				}),
+			a_: words_
+		};
+	});
+var $author$project$Affine$encrypt = F2(
+	function (params, _char) {
+		return $author$project$Alpha$toStr(
+			$author$project$Alpha$fromVal(
+				(params.B * $author$project$Alpha$toVal(_char)) + params.D));
+	});
+var $author$project$Affine$encryptLetter = F2(
+	function (params, t) {
+		return {
+			az: A2($author$project$Affine$encrypt, params, t.M),
+			aF: $author$project$Alpha$toStr(t.M),
+			aG: $elm$core$Maybe$Nothing,
+			ab: t.ab,
+			aS: $author$project$Alpha$toStr(t.M)
+		};
+	});
+var $author$project$Affine$maxValueOfB = 25;
+var $author$project$Affine$valuesOfA = $elm$core$Array$fromList(
+	_List_fromArray(
+		[1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]));
+var $author$project$Affine$createProblem = F2(
+	function (randomInput, words) {
+		var params = {
+			B: A2(
+				$elm$core$Maybe$withDefault,
+				1,
+				function (idx) {
+					return A2($elm$core$Array$get, idx, $author$project$Affine$valuesOfA);
+				}(
+					A2(
+						$author$project$Extra$randomIdx,
+						randomInput.B,
+						$elm$core$Array$length($author$project$Affine$valuesOfA)))),
+			D: A3($author$project$Extra$randomInt, randomInput.D, 1, $author$project$Affine$maxValueOfB)
 		};
 		return {
-			ay: 2,
-			aK: 'Aristocrat',
-			aX: A2(
+			aA: 1,
+			aM: 'Affine (A = ' + ($elm$core$String$fromInt(params.B) + (', B = ' + ($elm$core$String$fromInt(params.D) + ')'))),
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2(
+						aN: A2(
 							$elm$core$List$map,
-							$author$project$Aristocrat$encryptLetter(params),
+							$author$project$Affine$encryptLetter(params),
 							w)
 					};
 				},
 				words)
+		};
+	});
+var $author$project$ListEx$partitionAtHelper = F3(
+	function (idx, items, before) {
+		partitionAtHelper:
+		while (true) {
+			if (!items.b) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var x = items.a;
+				var xs = items.b;
+				if (!idx) {
+					return $elm$core$Maybe$Just(
+						_Utils_Tuple3(
+							$elm$core$List$reverse(before),
+							x,
+							xs));
+				} else {
+					var $temp$idx = idx - 1,
+						$temp$items = xs,
+						$temp$before = A2($elm$core$List$cons, x, before);
+					idx = $temp$idx;
+					items = $temp$items;
+					before = $temp$before;
+					continue partitionAtHelper;
+				}
+			}
+		}
+	});
+var $author$project$ListEx$partitionAt = F2(
+	function (idx, items) {
+		return (idx >= 0) ? A3($author$project$ListEx$partitionAtHelper, idx, items, _List_Nil) : $elm$core$Maybe$Nothing;
+	});
+var $author$project$ListEx$shuffleHelper = F3(
+	function (randoms, items, output) {
+		if ($elm$core$List$isEmpty(items)) {
+			return $elm$core$Maybe$Just(output);
+		} else {
+			if (!randoms.b) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var r = randoms.a;
+				var rs = randoms.b;
+				return A2(
+					$elm$core$Maybe$andThen,
+					function (_v1) {
+						var before = _v1.a;
+						var x = _v1.b;
+						var after = _v1.c;
+						return A3(
+							$author$project$ListEx$shuffleHelper,
+							rs,
+							_Utils_ap(before, after),
+							_Utils_ap(
+								output,
+								_List_fromArray(
+									[x])));
+					},
+					function (idx) {
+						return A2($author$project$ListEx$partitionAt, idx, items);
+					}(
+						A2(
+							$author$project$Extra$randomIdx,
+							r,
+							$elm$core$List$length(items))));
+			}
+		}
+	});
+var $author$project$ListEx$shuffle = F2(
+	function (randoms, items) {
+		return A3($author$project$ListEx$shuffleHelper, randoms, items, _List_Nil);
+	});
+var $author$project$Key$create = function (randomInput) {
+	return A2(
+		$author$project$Key$createHelper,
+		randomInput,
+		A2(
+			$elm$core$Maybe$withDefault,
+			A2($elm$core$List$range, 0, 25),
+			A2(
+				$author$project$ListEx$shuffle,
+				randomInput.aJ,
+				A2($elm$core$List$range, 0, 25))));
+};
+var $author$project$Aristocrat$createProblem = F2(
+	function (randomInput, words) {
+		var params = {
+			y: $author$project$Key$create(randomInput)
+		};
+		var words_ = A2(
+			$elm$core$List$map,
+			function (w) {
+				return {
+					aN: A2(
+						$elm$core$List$map,
+						$author$project$Aristocrat$encryptLetter(params),
+						w)
+				};
+			},
+			words);
+		return {
+			aA: 2,
+			aM: 'Aristocrat',
+			aW: $elm$core$Maybe$Just(
+				{
+					Z: $author$project$WordEx$frequencies(words_),
+					ac: $author$project$Key$list(params.y)
+				}),
+			a_: words_
 		};
 	});
 var $author$project$Atbash$encrypt = function (_char) {
@@ -6505,23 +6881,24 @@ var $author$project$Atbash$encrypt = function (_char) {
 };
 var $author$project$Atbash$encryptLetter = function (t) {
 	return {
-		ax: $author$project$Atbash$encrypt(t.L),
-		aD: $author$project$Alpha$toStr(t.L),
-		aE: $elm$core$Maybe$Nothing,
-		aa: t.aa,
-		aQ: $author$project$Alpha$toStr(t.L)
+		az: $author$project$Atbash$encrypt(t.M),
+		aF: $author$project$Alpha$toStr(t.M),
+		aG: $elm$core$Maybe$Nothing,
+		ab: t.ab,
+		aS: $author$project$Alpha$toStr(t.M)
 	};
 };
 var $author$project$Atbash$createProblem = F2(
 	function (_v0, words) {
 		return {
-			ay: 3,
-			aK: 'Atbash',
-			aX: A2(
+			aA: 4,
+			aM: 'Atbash',
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2($elm$core$List$map, $author$project$Atbash$encryptLetter, w)
+						aN: A2($elm$core$List$map, $author$project$Atbash$encryptLetter, w)
 					};
 				},
 				words)
@@ -6576,23 +6953,24 @@ var $author$project$Baconian$encrypt = function (_char) {
 };
 var $author$project$Baconian$encryptLetter = function (t) {
 	return {
-		ax: $author$project$Baconian$encrypt(t.L),
-		aD: $author$project$Alpha$toStr(t.L),
-		aE: $elm$core$Maybe$Nothing,
-		aa: t.aa,
-		aQ: $author$project$Alpha$toStr(t.L)
+		az: $author$project$Baconian$encrypt(t.M),
+		aF: $author$project$Alpha$toStr(t.M),
+		aG: $elm$core$Maybe$Nothing,
+		ab: t.ab,
+		aS: $author$project$Alpha$toStr(t.M)
 	};
 };
 var $author$project$Baconian$createProblem = F2(
 	function (_v0, words) {
 		return {
-			ay: 4,
-			aK: 'Baconian',
-			aX: A2(
+			aA: 5,
+			aM: 'Baconian',
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2($elm$core$List$map, $author$project$Baconian$encryptLetter, w)
+						aN: A2($elm$core$List$map, $author$project$Baconian$encryptLetter, w)
 					};
 				},
 				words)
@@ -6607,26 +6985,27 @@ var $author$project$Caesar$encrypt = F2(
 var $author$project$Caesar$encryptLetter = F2(
 	function (offset, t) {
 		return {
-			ax: A2($author$project$Caesar$encrypt, offset, t.L),
-			aD: $author$project$Alpha$toStr(t.L),
-			aE: $elm$core$Maybe$Nothing,
-			aa: t.aa,
-			aQ: $author$project$Alpha$toStr(t.L)
+			az: A2($author$project$Caesar$encrypt, offset, t.M),
+			aF: $author$project$Alpha$toStr(t.M),
+			aG: $elm$core$Maybe$Nothing,
+			ab: t.ab,
+			aS: $author$project$Alpha$toStr(t.M)
 		};
 	});
 var $author$project$Caesar$maxOffset = 25;
 var $author$project$Caesar$minOffset = 1;
 var $author$project$Caesar$createProblem = F2(
 	function (randomInput, words) {
-		var offset = A3($author$project$Extra$randomInt, randomInput.A, $author$project$Caesar$minOffset, $author$project$Caesar$maxOffset);
+		var offset = A3($author$project$Extra$randomInt, randomInput.B, $author$project$Caesar$minOffset, $author$project$Caesar$maxOffset);
 		return {
-			ay: 5,
-			aK: 'Caesar',
-			aX: A2(
+			aA: 6,
+			aM: 'Caesar',
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2(
+						aN: A2(
 							$elm$core$List$map,
 							$author$project$Caesar$encryptLetter(offset),
 							w)
@@ -6655,26 +7034,6 @@ var $author$project$Extra$combine = A2(
 	$elm$core$List$foldr,
 	$elm$core$Maybe$map2($elm$core$List$cons),
 	$elm$core$Maybe$Just(_List_Nil));
-var $elm$core$Set$Set_elm_builtin = $elm$core$Basics$identity;
-var $elm$core$Set$insert = F2(
-	function (key, _v0) {
-		var dict = _v0;
-		return A3($elm$core$Dict$insert, key, 0, dict);
-	});
-var $elm$core$Dict$member = F2(
-	function (key, dict) {
-		var _v0 = A2($elm$core$Dict$get, key, dict);
-		if (!_v0.$) {
-			return true;
-		} else {
-			return false;
-		}
-	});
-var $elm$core$Set$member = F2(
-	function (key, _v0) {
-		var dict = _v0;
-		return A2($elm$core$Dict$member, key, dict);
-	});
 var $author$project$Extra$dedupeHelper = F3(
 	function (source, seen, output) {
 		dedupeHelper:
@@ -6708,7 +7067,6 @@ var $author$project$Extra$dedupeHelper = F3(
 			}
 		}
 	});
-var $elm$core$Set$empty = $elm$core$Dict$empty;
 var $author$project$Extra$dedupe = function (source) {
 	return A3($author$project$Extra$dedupeHelper, source, $elm$core$Set$empty, '');
 };
@@ -6723,19 +7081,15 @@ var $elm$core$String$filter = _String_filter;
 var $elm$core$Set$fromList = function (list) {
 	return A3($elm$core$List$foldl, $elm$core$Set$insert, $elm$core$Set$empty, list);
 };
-var $elm$core$String$foldr = _String_foldr;
-var $elm$core$String$toList = function (string) {
-	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
-};
 var $author$project$Extra$filterOut = function (input) {
 	var exclude_ = $elm$core$Set$fromList(
-		$elm$core$String$toList(input.aB));
+		$elm$core$String$toList(input.aD));
 	return A2(
 		$elm$core$String$filter,
 		function (c) {
 			return !A2($elm$core$Set$member, c, exclude_);
 		},
-		input.aS);
+		input.aU);
 };
 var $elm$core$Maybe$map = F2(
 	function (f, maybe) {
@@ -6747,10 +7101,6 @@ var $elm$core$Maybe$map = F2(
 			return $elm$core$Maybe$Nothing;
 		}
 	});
-var $author$project$Alpha$parse = function (c) {
-	return $elm$core$Char$isAlpha(c) ? $elm$core$Maybe$Just(
-		$elm$core$Char$toLower(c)) : $elm$core$Maybe$Nothing;
-};
 var $elm$core$String$replace = F3(
 	function (before, after, string) {
 		return A2(
@@ -6768,7 +7118,7 @@ var $author$project$Polybius$create = function (keyword) {
 			$elm$core$String$toLower(
 				A2($elm$core$String$filter, $elm$core$Char$isAlpha, keyword))));
 	var alphabet = $author$project$Extra$filterOut(
-		{aB: keyword_, aS: 'abcdefghiklmnopqrstuvwxyz'});
+		{aD: keyword_, aU: 'abcdefghiklmnopqrstuvwxyz'});
 	return A2(
 		$elm$core$Maybe$withDefault,
 		$author$project$Polybius$defaultPolybius,
@@ -6890,44 +7240,29 @@ var $author$project$Polybius$toVal = F2(
 	});
 var $author$project$Polybius$encode = F3(
 	function (p, k, t) {
-		var tVal = A2($author$project$Polybius$toVal, p, t.L);
+		var tVal = A2($author$project$Polybius$toVal, p, t.M);
 		var kVal = A2(
 			$author$project$Polybius$toVal,
 			p,
-			A2($author$project$Keyword$getAt, k, t.aa));
+			A2($author$project$Keyword$getAt, k, t.ab));
 		return kVal + tVal;
 	});
 var $author$project$Nihilist$encrypt = F2(
 	function (params, t) {
 		return $elm$core$String$fromInt(
-			A3($author$project$Polybius$encode, params.K, params.D, t));
+			A3($author$project$Polybius$encode, params.L, params.E, t));
 	});
 var $author$project$Nihilist$encryptLetter = F2(
 	function (params, t) {
 		return {
-			ax: A2($author$project$Nihilist$encrypt, params, t),
-			aD: $author$project$Alpha$toStr(
-				A2($author$project$Keyword$getAt, params.D, t.aa)) + ('--' + $author$project$Alpha$toStr(t.L)),
-			aE: $elm$core$Maybe$Nothing,
-			aa: t.aa,
-			aQ: $author$project$Alpha$toStr(t.L)
+			az: A2($author$project$Nihilist$encrypt, params, t),
+			aF: $author$project$Alpha$toStr(
+				A2($author$project$Keyword$getAt, params.E, t.ab)) + ('--' + $author$project$Alpha$toStr(t.M)),
+			aG: $elm$core$Maybe$Nothing,
+			ab: t.ab,
+			aS: $author$project$Alpha$toStr(t.M)
 		};
 	});
-var $author$project$Data$keywords = $elm$core$Array$fromList(
-	_List_fromArray(
-		['Add', 'Auth', 'Bits', 'Byte', 'Book', 'Box', 'Break', 'Brute', 'Bugs', 'Caesar', 'Cast', 'Chain', 'Char', 'Code', 'Con', 'Cover', 'Crack', 'Cross', 'Cube', 'Cycle', 'Data', 'Deck', 'Decode', 'Deep', 'DES', 'Digit', 'Disk', 'Div', 'Door', 'ECB', 'Encode', 'Enigma', 'Entry', 'Fax', 'Field', 'Figure', 'File', 'Gate', 'Hash', 'Hide', 'Hill', 'Hop', 'IV', 'Jazz', 'Jitter', 'Key', 'Keys', 'Layer', 'Len', 'Line', 'Link', 'Log', 'Logic', 'Loop', 'MAC', 'Map', 'Mark', 'Math', 'Meet', 'Melon', 'Mode', 'Mod', 'Mono', 'Msg', 'Nil', 'Nix', 'Noise', 'Nonce', 'Null', 'Pad', 'Pass', 'Pipe', 'Plan', 'Poly', 'Porta', 'Prep', 'Pub', 'RSA', 'Run', 'Rune', 'Salt', 'Scram', 'Seal', 'Sec', 'Secret', 'Send', 'Shift', 'Sign', 'Spy', 'Sub', 'Suite', 'Sync', 'Sym', 'Text', 'Trap', 'Vail', 'XOR', 'Zero', 'AES', 'Arc', 'Args', 'Atom', 'Band', 'Base', 'Batch', 'Bind', 'Blob', 'Block', 'Cipher', 'Close', 'Cloud', 'Combo', 'Comp', 'Core', 'Crc', 'Curve', 'Diffie', 'Digest', 'Diff', 'ECC', 'End', 'Engage', 'Equal', 'Evt', 'Flow', 'Func', 'Gamma', 'Gen', 'Hand', 'Head', 'Hex', 'Info', 'Input', 'Inte', 'Ip', 'Item', 'Join', 'Jump', 'Kb', 'Lck', 'Lead', 'Left', 'List', 'Lock', 'Mask', 'Max', 'Min', 'Mix', 'Msgid', 'Net', 'New', 'Next', 'Node', 'Open', 'Output', 'Pair', 'Param', 'Part', 'Path', 'Perm', 'Pin', 'Post', 'Priv', 'Proc', 'Prot', 'Prng', 'Psk', 'Pto', 'Rand', 'Recv', 'Reg', 'Rem', 'Rnd', 'Root', 'Seed', 'Select', 'Semi', 'Sha', 'Skip', 'Slice', 'Slot', 'Src', 'Start', 'Step', 'Stop', 'Tag', 'Tls', 'Token', 'Topo', 'Tup', 'Type', 'Udp', 'Unic', 'Url', 'Val', 'Var', 'Vector', 'Verify', 'View', 'Void', 'Wan', 'Word']));
-var $author$project$Data$randomKeyword = function (r) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		'key',
-		function (i) {
-			return A2($elm$core$Array$get, i, $author$project$Data$keywords);
-		}(
-			A2(
-				$author$project$Extra$randomIdx,
-				r,
-				$elm$core$Array$length($author$project$Data$keywords))));
-};
 var $elm$core$String$toUpper = _String_toUpper;
 var $author$project$Polybius$toKeywordStr = function (_v0) {
 	var _v1 = _v0;
@@ -6942,19 +7277,20 @@ var $author$project$Keyword$toStr = function (_v0) {
 var $author$project$Nihilist$createProblem = F2(
 	function (randomInput, words) {
 		var params = {
-			D: $author$project$Keyword$createOrDefault(
-				$author$project$Data$randomKeyword(randomInput.A)),
-			K: $author$project$Polybius$create(
-				$author$project$Data$randomKeyword(randomInput.C))
+			E: $author$project$Keyword$createOrDefault(
+				$author$project$Data$randomKeyword(randomInput.B)),
+			L: $author$project$Polybius$create(
+				$author$project$Data$randomKeyword(randomInput.D))
 		};
 		return {
-			ay: 6,
-			aK: 'Nihilist (polybius key = ' + ($author$project$Polybius$toKeywordStr(params.K) + (', keyword = ' + ($author$project$Keyword$toStr(params.D) + ')'))),
-			aX: A2(
+			aA: 7,
+			aM: 'Nihilist (polybius key = ' + ($author$project$Polybius$toKeywordStr(params.L) + (', keyword = ' + ($author$project$Keyword$toStr(params.E) + ')'))),
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2(
+						aN: A2(
 							$elm$core$List$map,
 							$author$project$Nihilist$encryptLetter(params),
 							w)
@@ -6970,8 +7306,8 @@ var $author$project$Porta$encrypt = F2(
 			return ((k / 2) | 0) + 13;
 		}(
 			$author$project$Alpha$toVal(
-				A2($author$project$Keyword$getAt, params.D, t.aa)));
-		var cVal = $author$project$Alpha$toVal(t.L);
+				A2($author$project$Keyword$getAt, params.E, t.ab)));
+		var cVal = $author$project$Alpha$toVal(t.M);
 		var val = (_Utils_cmp(
 			cVal,
 			$author$project$Alpha$toVal($author$project$Alpha$m)) < 1) ? (cVal + offset) : (cVal - offset);
@@ -6982,28 +7318,29 @@ var $author$project$Porta$encrypt = F2(
 var $author$project$Porta$encryptLetter = F2(
 	function (params, t) {
 		return {
-			ax: A2($author$project$Porta$encrypt, params, t),
-			aD: $author$project$Alpha$toStr(
-				A2($author$project$Keyword$getAt, params.D, t.aa)) + ('--' + $author$project$Alpha$toStr(t.L)),
-			aE: $elm$core$Maybe$Nothing,
-			aa: t.aa,
-			aQ: $author$project$Alpha$toStr(t.L)
+			az: A2($author$project$Porta$encrypt, params, t),
+			aF: $author$project$Alpha$toStr(
+				A2($author$project$Keyword$getAt, params.E, t.ab)) + ('--' + $author$project$Alpha$toStr(t.M)),
+			aG: $elm$core$Maybe$Nothing,
+			ab: t.ab,
+			aS: $author$project$Alpha$toStr(t.M)
 		};
 	});
 var $author$project$Porta$createProblem = F2(
 	function (randomInput, words) {
 		var params = {
-			D: $author$project$Keyword$createOrDefault(
-				$author$project$Data$randomKeyword(randomInput.A))
+			E: $author$project$Keyword$createOrDefault(
+				$author$project$Data$randomKeyword(randomInput.B))
 		};
 		return {
-			ay: 7,
-			aK: 'Porta (keyword = ' + ($author$project$Keyword$toStr(params.D) + ')'),
-			aX: A2(
+			aA: 8,
+			aM: 'Porta (keyword = ' + ($author$project$Keyword$toStr(params.E) + ')'),
+			aW: $elm$core$Maybe$Nothing,
+			a_: A2(
 				$elm$core$List$map,
 				function (w) {
 					return {
-						aL: A2(
+						aN: A2(
 							$elm$core$List$map,
 							$author$project$Porta$encryptLetter(params),
 							w)
@@ -7022,12 +7359,14 @@ var $author$project$Maker$getCreateProblemFn = F2(
 			case 2:
 				return $author$project$Aristocrat$createProblem;
 			case 3:
-				return $author$project$Atbash$createProblem;
+				return $author$project$Aristocrat$createK1Problem;
 			case 4:
-				return $author$project$Baconian$createProblem;
+				return $author$project$Atbash$createProblem;
 			case 5:
-				return $author$project$Caesar$createProblem;
+				return $author$project$Baconian$createProblem;
 			case 6:
+				return $author$project$Caesar$createProblem;
+			case 7:
 				return $author$project$Nihilist$createProblem;
 			default:
 				return $author$project$Porta$createProblem;
@@ -7047,7 +7386,7 @@ var $author$project$Maker$randomCreateProblemFn = function (randomInput) {
 			}(
 				A2(
 					$author$project$Extra$randomIdx,
-					randomInput.A,
+					randomInput.B,
 					$elm$core$Array$length($author$project$Interface$allCiphers)))));
 };
 var $author$project$Data$longQuotes = $elm$core$Array$fromList(
@@ -7082,109 +7421,12 @@ var $author$project$Data$randomQuote = function (r) {
 				$elm$core$Array$length($author$project$Data$quotes))));
 	return q;
 };
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
-var $elm$core$Char$toUpper = _Char_toUpper;
-var $author$project$Token$tokenizeHelper = F4(
-	function (input, currentIdx, currentWord, output) {
-		tokenizeHelper:
-		while (true) {
-			if (!input.b) {
-				return $elm$core$List$isEmpty(currentWord) ? output : _Utils_ap(
-					output,
-					_List_fromArray(
-						[currentWord]));
-			} else {
-				if (' ' === input.a) {
-					var xs = input.b;
-					if (!$elm$core$List$isEmpty(currentWord)) {
-						var $temp$input = xs,
-							$temp$currentIdx = currentIdx,
-							$temp$currentWord = _List_Nil,
-							$temp$output = _Utils_ap(
-							output,
-							_List_fromArray(
-								[currentWord]));
-						input = $temp$input;
-						currentIdx = $temp$currentIdx;
-						currentWord = $temp$currentWord;
-						output = $temp$output;
-						continue tokenizeHelper;
-					} else {
-						var $temp$input = xs,
-							$temp$currentIdx = currentIdx,
-							$temp$currentWord = _List_Nil,
-							$temp$output = output;
-						input = $temp$input;
-						currentIdx = $temp$currentIdx;
-						currentWord = $temp$currentWord;
-						output = $temp$output;
-						continue tokenizeHelper;
-					}
-				} else {
-					var x = input.a;
-					var xs = input.b;
-					var _v1 = $author$project$Alpha$parse(x);
-					if (_v1.$ === 1) {
-						var $temp$input = xs,
-							$temp$currentIdx = currentIdx,
-							$temp$currentWord = currentWord,
-							$temp$output = output;
-						input = $temp$input;
-						currentIdx = $temp$currentIdx;
-						currentWord = $temp$currentWord;
-						output = $temp$output;
-						continue tokenizeHelper;
-					} else {
-						var c = _v1.a;
-						var $temp$input = xs,
-							$temp$currentIdx = currentIdx + 1,
-							$temp$currentWord = _Utils_ap(
-							currentWord,
-							_List_fromArray(
-								[
-									{L: c, aa: currentIdx}
-								])),
-							$temp$output = output;
-						input = $temp$input;
-						currentIdx = $temp$currentIdx;
-						currentWord = $temp$currentWord;
-						output = $temp$output;
-						continue tokenizeHelper;
-					}
-				}
-			}
-		}
-	});
-var $author$project$Token$tokenize = function (str) {
-	return function (input) {
-		return A4($author$project$Token$tokenizeHelper, input, 0, _List_Nil, _List_Nil);
-	}(
-		A2(
-			$elm$core$List$map,
-			$elm$core$Char$toUpper,
-			A2(
-				$elm$core$List$filter,
-				function (c) {
-					return $elm$core$Char$isAlpha(c) || (c === ' ');
-				},
-				$elm$core$String$toList(str))));
-};
 var $author$project$Maker$createProblem = F2(
 	function (problemInput, randomInput) {
-		var q = problemInput.aF ? $author$project$Token$tokenize(
-			$author$project$Data$randomLongQuote(randomInput.A)) : $author$project$Token$tokenize(
-			$author$project$Data$randomQuote(randomInput.A));
-		var fn = A2($author$project$Maker$getCreateProblemFn, problemInput.ay, randomInput);
+		var q = (problemInput.aH || ((problemInput.aA === 2) || (problemInput.aA === 3))) ? $author$project$Token$tokenize(
+			$author$project$Data$randomLongQuote(randomInput.B)) : $author$project$Token$tokenize(
+			$author$project$Data$randomQuote(randomInput.B));
+		var fn = A2($author$project$Maker$getCreateProblemFn, problemInput.aA, randomInput);
 		return A2(fn, randomInput, q);
 	});
 var $author$project$Extra$equalsIgnoreCase = F2(
@@ -7193,16 +7435,7 @@ var $author$project$Extra$equalsIgnoreCase = F2(
 			$elm$core$String$toUpper(s1),
 			$elm$core$String$toUpper(s2));
 	});
-var $elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return $elm$core$Maybe$Just(x);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $author$project$Interface$invalidLetter = {ax: '', aD: '', aE: $elm$core$Maybe$Nothing, aa: -1, aQ: ''};
+var $author$project$Interface$invalidLetter = {az: '', aF: '', aG: $elm$core$Maybe$Nothing, ab: -1, aS: ''};
 var $author$project$Interface$mutate = F2(
 	function (fn, words) {
 		return A2(
@@ -7211,7 +7444,7 @@ var $author$project$Interface$mutate = F2(
 				return _Utils_update(
 					w,
 					{
-						aL: A2($elm$core$List$map, fn, w.aL)
+						aN: A2($elm$core$List$map, fn, w.aN)
 					});
 			},
 			words);
@@ -7220,6 +7453,9 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$Left = {$: 3};
 var $author$project$Main$Right = {$: 4};
+var $author$project$Main$TableLetter = function (a) {
+	return {$: 1, a: a};
+};
 var $author$project$Interface$getByIdx = F2(
 	function (idx, words) {
 		getByIdx:
@@ -7233,9 +7469,9 @@ var $author$project$Interface$getByIdx = F2(
 					A2(
 						$elm$core$List$filter,
 						function (l) {
-							return _Utils_eq(l.aa, idx);
+							return _Utils_eq(l.ab, idx);
 						},
-						x.aL));
+						x.aN));
 				if (_v1.$ === 1) {
 					var $temp$idx = idx,
 						$temp$words = xs;
@@ -7251,14 +7487,48 @@ var $author$project$Interface$getByIdx = F2(
 	});
 var $author$project$Main$onKeyDownInner = F2(
 	function (s, guess_) {
-		var setIfMatch = function (l) {
-			return _Utils_eq(s.j.aa, l.aa) ? A2($author$project$Interface$setGuess, guess_, l) : (((!s.aF) && _Utils_eq(s.j.aD, l.aD)) ? A2($author$project$Interface$setGuess, guess_, l) : l);
+		var setTableLetterIfMatch = function (l) {
+			var _v1 = s.g;
+			if (!_v1.$) {
+				var selected = _v1.a;
+				return ((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? A2($author$project$Interface$setGuess, guess_, l) : l;
+			} else {
+				var selected = _v1.a;
+				return _Utils_eq(selected.ab, l.ab) ? A2($author$project$Interface$setGuess, guess_, l) : (((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? A2($author$project$Interface$setGuess, guess_, l) : l);
+			}
 		};
+		var table_ = A2(
+			$elm$core$Maybe$andThen,
+			function (t) {
+				return A2(
+					$elm$core$Maybe$map,
+					function (w) {
+						return {Z: t.Z, ac: w.aN};
+					},
+					$elm$core$List$head(
+						A2(
+							$author$project$Interface$mutate,
+							setTableLetterIfMatch,
+							_List_fromArray(
+								[
+									{aN: t.ac}
+								]))));
+			},
+			s.aW);
+		var setProblemLetterIfMatch = function (l) {
+			var _v0 = s.g;
+			if (!_v0.$) {
+				var selected = _v0.a;
+				return _Utils_eq(selected.ab, l.ab) ? A2($author$project$Interface$setGuess, guess_, l) : (((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? A2($author$project$Interface$setGuess, guess_, l) : l);
+			} else {
+				var selected = _v0.a;
+				return ((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? A2($author$project$Interface$setGuess, guess_, l) : l;
+			}
+		};
+		var words_ = A2($author$project$Interface$mutate, setProblemLetterIfMatch, s.a_);
 		return _Utils_update(
 			s,
-			{
-				aX: A2($author$project$Interface$mutate, setIfMatch, s.aX)
-			});
+			{aW: table_, a_: words_});
 	});
 var $author$project$Main$onKeyDown = F2(
 	function (s, op) {
@@ -7284,24 +7554,92 @@ var $author$project$Main$onKeyDown = F2(
 					op = $temp$op;
 					continue onKeyDown;
 				case 3:
-					var _v1 = A2($author$project$Interface$getByIdx, s.j.aa - 1, s.aX);
-					if (_v1.$ === 1) {
-						return s;
-					} else {
-						var l = _v1.a;
-						return _Utils_update(
+					var _v1 = s.g;
+					if (!_v1.$) {
+						var selected = _v1.a;
+						return A2(
+							$elm$core$Maybe$withDefault,
 							s,
-							{j: l});
+							A2(
+								$elm$core$Maybe$map,
+								function (l_) {
+									return _Utils_update(
+										s,
+										{
+											g: $author$project$Main$ProblemLetter(l_)
+										});
+								},
+								A2($author$project$Interface$getByIdx, selected.ab - 1, s.a_)));
+					} else {
+						var selected = _v1.a;
+						return A2(
+							$elm$core$Maybe$withDefault,
+							s,
+							A2(
+								$elm$core$Maybe$map,
+								function (l_) {
+									return _Utils_update(
+										s,
+										{
+											g: $author$project$Main$TableLetter(l_)
+										});
+								},
+								A2(
+									$elm$core$Maybe$andThen,
+									$author$project$Interface$getByIdx(selected.ab - 1),
+									A2(
+										$elm$core$Maybe$map,
+										function (t) {
+											return _List_fromArray(
+												[
+													{aN: t.ac}
+												]);
+										},
+										s.aW))));
 					}
 				default:
-					var _v2 = A2($author$project$Interface$getByIdx, s.j.aa + 1, s.aX);
-					if (_v2.$ === 1) {
-						return s;
-					} else {
-						var l = _v2.a;
-						return _Utils_update(
+					var _v2 = s.g;
+					if (!_v2.$) {
+						var selected = _v2.a;
+						return A2(
+							$elm$core$Maybe$withDefault,
 							s,
-							{j: l});
+							A2(
+								$elm$core$Maybe$map,
+								function (l_) {
+									return _Utils_update(
+										s,
+										{
+											g: $author$project$Main$ProblemLetter(l_)
+										});
+								},
+								A2($author$project$Interface$getByIdx, selected.ab + 1, s.a_)));
+					} else {
+						var selected = _v2.a;
+						return A2(
+							$elm$core$Maybe$withDefault,
+							s,
+							A2(
+								$elm$core$Maybe$map,
+								function (l_) {
+									return _Utils_update(
+										s,
+										{
+											g: $author$project$Main$TableLetter(l_)
+										});
+								},
+								A2(
+									$elm$core$Maybe$andThen,
+									$author$project$Interface$getByIdx(selected.ab + 1),
+									A2(
+										$elm$core$Maybe$map,
+										function (t) {
+											return _List_fromArray(
+												[
+													{aN: t.ac}
+												]);
+										},
+										s.aW))));
 					}
 			}
 		}
@@ -7330,7 +7668,7 @@ var $author$project$Main$update = F2(
 							_Utils_update(
 								s,
 								{
-									aX: A2($author$project$Interface$mutate, $author$project$Interface$clearGuess, s.aX)
+									a_: A2($author$project$Interface$mutate, $author$project$Interface$clearGuess, s.a_)
 								})),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -7364,20 +7702,22 @@ var $author$project$Main$update = F2(
 					$author$project$Main$Ready(
 						{
 							s: 0,
-							ay: p.ay,
-							aF: problemInput.aF,
-							aK: p.aK,
-							j: A2(
-								$elm$core$Maybe$withDefault,
-								$author$project$Interface$invalidLetter,
+							aA: p.aA,
+							aH: problemInput.aH,
+							aM: p.aM,
+							g: $author$project$Main$ProblemLetter(
 								A2(
-									$elm$core$Maybe$andThen,
-									function (w) {
-										return $elm$core$List$head(w.aL);
-									},
-									$elm$core$List$head(p.aX))),
-							F: false,
-							aX: p.aX
+									$elm$core$Maybe$withDefault,
+									$author$project$Interface$invalidLetter,
+									A2(
+										$elm$core$Maybe$andThen,
+										function (w) {
+											return $elm$core$List$head(w.aN);
+										},
+										$elm$core$List$head(p.a_)))),
+							G: false,
+							aW: p.aW,
+							a_: p.a_
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
@@ -7396,21 +7736,21 @@ var $author$project$Main$update = F2(
 										false,
 										A2(
 											$elm$core$Maybe$map,
-											$author$project$Extra$equalsIgnoreCase(l.aQ),
-											l.aE));
+											$author$project$Extra$equalsIgnoreCase(l.aS),
+											l.aG));
 								},
-								w.aL);
+								w.aN);
 						},
-						s.aX);
+						s.a_);
 					return _Utils_Tuple2(
 						$author$project$Main$Ready(
 							_Utils_update(
 								s,
-								{s: s.s + 1, F: solved})),
+								{s: s.s + 1, G: solved})),
 						$elm$core$Platform$Cmd$none);
 				}
 			case 5:
-				var idx = msg.a;
+				var selected = msg.a;
 				if (!m.$) {
 					return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
 				} else {
@@ -7419,7 +7759,7 @@ var $author$project$Main$update = F2(
 						$author$project$Main$Ready(
 							_Utils_update(
 								s,
-								{j: idx})),
+								{g: selected})),
 						$elm$core$Platform$Cmd$none);
 				}
 			default:
@@ -7430,7 +7770,7 @@ var $author$project$Main$update = F2(
 						A2(
 							$elm$random$Random$generate,
 							$author$project$Main$NewProblem(
-								{ay: 0, aF: checked}),
+								{aA: 0, aH: checked}),
 							$author$project$Main$generateRandomInput));
 				} else {
 					var s = m.a;
@@ -7439,7 +7779,7 @@ var $author$project$Main$update = F2(
 						A2(
 							$elm$random$Random$generate,
 							$author$project$Main$NewProblem(
-								{ay: s.ay, aF: checked}),
+								{aA: s.aA, aH: checked}),
 							$author$project$Main$generateRandomInput));
 				}
 		}
@@ -7478,7 +7818,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $author$project$Main$viewButtons = function (s) {
-	return s.F ? _List_Nil : _List_fromArray(
+	return s.G ? _List_Nil : _List_fromArray(
 		[
 			A2(
 			$elm$html$Html$button,
@@ -7503,6 +7843,145 @@ var $author$project$Main$viewButtons = function (s) {
 					$elm$html$Html$text('Reset')
 				]))
 		]);
+};
+var $author$project$Main$Select = function (a) {
+	return {$: 5, a: a};
+};
+var $elm$html$Html$table = _VirtualDom_node('table');
+var $elm$html$Html$tbody = _VirtualDom_node('tbody');
+var $elm$html$Html$td = _VirtualDom_node('td');
+var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $author$project$Main$viewFrequencyTable = function (s) {
+	var _v0 = s.aW;
+	if (_v0.$ === 1) {
+		return A2($elm$html$Html$div, _List_Nil, _List_Nil);
+	} else {
+		var t = _v0.a;
+		var topRow = A2(
+			$elm$core$List$map,
+			function (l) {
+				return A2(
+					$elm$html$Html$td,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('pt')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(l.az)
+						]));
+			},
+			t.ac);
+		var midRow = A2(
+			$elm$core$List$map,
+			function (l) {
+				return A2(
+					$elm$html$Html$td,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(
+							$elm$core$String$fromInt(
+								A2($author$project$DictEx$getOrZero, l.az, t.Z.az)))
+						]));
+			},
+			t.ac);
+		var botRow = A2(
+			$elm$core$List$map,
+			function (l) {
+				var selectedClass = function () {
+					var _v1 = s.g;
+					if (!_v1.$) {
+						var selected = _v1.a;
+						return ((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? 'ingroup' : '';
+					} else {
+						var selected = _v1.a;
+						return _Utils_eq(selected.ab, l.ab) ? 'selected' : (((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? 'ingroup' : '');
+					}
+				}();
+				return A2(
+					$elm$html$Html$td,
+					_List_fromArray(
+						[
+							$elm$html$Html$Events$onClick(
+							$author$project$Main$Select(
+								$author$project$Main$TableLetter(l)))
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('input'),
+									$elm$html$Html$Attributes$class(selectedClass)
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(
+									A2($elm$core$Maybe$withDefault, '', l.aG))
+								]))
+						]));
+			},
+			t.ac);
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$table,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$tbody,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$tr,
+									_List_Nil,
+									A2(
+										$elm$core$List$cons,
+										A2(
+											$elm$html$Html$td,
+											_List_fromArray(
+												[
+													$elm$html$Html$Attributes$class('topLeftCell')
+												]),
+											_List_Nil),
+										topRow)),
+									A2(
+									$elm$html$Html$tr,
+									_List_Nil,
+									A2(
+										$elm$core$List$cons,
+										A2(
+											$elm$html$Html$td,
+											_List_Nil,
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Frequency')
+												])),
+										midRow)),
+									A2(
+									$elm$html$Html$tr,
+									_List_Nil,
+									A2(
+										$elm$core$List$cons,
+										A2(
+											$elm$html$Html$td,
+											_List_Nil,
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Replacement')
+												])),
+										botRow))
+								]))
+						]))
+				]));
+	}
 };
 var $author$project$Main$ToggleHardMode = function (a) {
 	return {$: 6, a: a};
@@ -7553,7 +8032,7 @@ var $author$project$Main$viewHardModeToggle = function (s) {
 						$elm$html$Html$Attributes$type_('checkbox'),
 						$elm$html$Html$Attributes$id('hardModeToggle'),
 						$elm$html$Html$Attributes$class('switch'),
-						$elm$html$Html$Attributes$checked(s.aF),
+						$elm$html$Html$Attributes$checked(s.aH),
 						$elm$html$Html$Events$onCheck($author$project$Main$ToggleHardMode)
 					]),
 				_List_Nil),
@@ -7570,7 +8049,7 @@ var $author$project$Main$viewHardModeToggle = function (s) {
 			]));
 };
 var $author$project$Main$viewInfo = function (s) {
-	return s.F ? _List_fromArray(
+	return s.G ? _List_fromArray(
 		[
 			$elm$html$Html$text(
 			'🎉🎉 Solved! (Attempts: ' + ($elm$core$String$fromInt(s.s) + ')'))
@@ -7592,12 +8071,14 @@ var $author$project$Interface$cipherToString = function (cipher) {
 		case 2:
 			return 'Aristocrat';
 		case 3:
-			return 'Atbash';
+			return 'Aristocrat K1';
 		case 4:
-			return 'Baconian';
+			return 'Atbash';
 		case 5:
-			return 'Caesar';
+			return 'Baconian';
 		case 6:
+			return 'Caesar';
+		case 7:
 			return 'Nihilist';
 		default:
 			return 'Porta';
@@ -7639,7 +8120,7 @@ var $author$project$Main$viewNavBarButtons = function (s) {
 						[
 							$elm$html$Html$Events$onClick(
 							$author$project$Main$InitNewProblem(
-								{ay: c, aF: s.aF}))
+								{aA: c, aH: s.aH}))
 						]),
 					_List_fromArray(
 						[
@@ -7649,16 +8130,18 @@ var $author$project$Main$viewNavBarButtons = function (s) {
 			},
 			$author$project$Interface$allCiphers));
 };
-var $elm$html$Html$table = _VirtualDom_node('table');
-var $elm$html$Html$tbody = _VirtualDom_node('tbody');
-var $elm$html$Html$tr = _VirtualDom_node('tr');
-var $author$project$Main$Select = function (a) {
-	return {$: 5, a: a};
-};
-var $elm$html$Html$td = _VirtualDom_node('td');
 var $author$project$Main$viewLetter = F2(
 	function (s, l) {
-		var selectedClass = _Utils_eq(s.j.aa, l.aa) ? 'selected' : (((!s.aF) && _Utils_eq(s.j.aD, l.aD)) ? 'ingroup' : '');
+		var selectedClass = function () {
+			var _v0 = s.g;
+			if (!_v0.$) {
+				var selected = _v0.a;
+				return _Utils_eq(selected.ab, l.ab) ? 'selected' : (((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? 'ingroup' : '');
+			} else {
+				var selected = _v0.a;
+				return ((!s.aH) && _Utils_eq(selected.aF, l.aF)) ? 'ingroup' : '';
+			}
+		}();
 		return A2(
 			$elm$html$Html$td,
 			_List_Nil,
@@ -7679,12 +8162,13 @@ var $author$project$Main$viewLetter = F2(
 									$elm$html$Html$Attributes$class('input'),
 									$elm$html$Html$Attributes$class(selectedClass),
 									$elm$html$Html$Events$onClick(
-									$author$project$Main$Select(l))
+									$author$project$Main$Select(
+										$author$project$Main$ProblemLetter(l)))
 								]),
 							_List_fromArray(
 								[
 									$elm$html$Html$text(
-									A2($elm$core$Maybe$withDefault, '', l.aE))
+									A2($elm$core$Maybe$withDefault, '', l.aG))
 								])),
 							A2(
 							$elm$html$Html$div,
@@ -7694,7 +8178,7 @@ var $author$project$Main$viewLetter = F2(
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text(l.ax)
+									$elm$html$Html$text(l.az)
 								]))
 						]))
 				]));
@@ -7720,7 +8204,7 @@ var $author$project$Main$viewWord = F2(
 							A2(
 								$elm$core$List$map,
 								$author$project$Main$viewLetter(s),
-								w.aL))
+								w.aN))
 						]))
 				]));
 	});
@@ -7756,7 +8240,7 @@ var $author$project$Main$viewMain = function (s) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text(s.aK)
+								$elm$html$Html$text(s.aM)
 							])),
 						A2(
 						$elm$html$Html$div,
@@ -7767,7 +8251,17 @@ var $author$project$Main$viewMain = function (s) {
 						A2(
 							$elm$core$List$map,
 							$author$project$Main$viewWord(s),
-							s.aX)),
+							s.a_)),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('frequencyContainer')
+							]),
+						_List_fromArray(
+							[
+								$author$project$Main$viewFrequencyTable(s)
+							])),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
@@ -7794,5 +8288,5 @@ var $author$project$Main$view = function (m) {
 	}
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{aJ: $author$project$Main$init, aT: $author$project$Main$subscriptions, aV: $author$project$Main$update, aW: $author$project$Main$view});
+	{aL: $author$project$Main$init, aV: $author$project$Main$subscriptions, aY: $author$project$Main$update, aZ: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$float)(0)}});}(this));
