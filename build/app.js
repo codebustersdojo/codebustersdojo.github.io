@@ -8246,23 +8246,46 @@ var $author$project$Main$viewHardModeToggle = function (s) {
 					]))
 			]));
 };
+var $elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
+var $author$project$TimeEx$hourInSeconds = 60 * 60;
+var $author$project$TimeEx$minsInSeconds = 60;
+var $author$project$TimeEx$durationStr = F2(
+	function (start, end) {
+		var totalSecs = (($elm$time$Time$posixToMillis(end) - $elm$time$Time$posixToMillis(start)) / 1000) | 0;
+		var hours = (totalSecs / $author$project$TimeEx$hourInSeconds) | 0;
+		var hoursStr = (hours > 0) ? _Utils_ap(
+			$elm$core$String$fromInt(hours),
+			(hours > 1) ? ' hours' : ' hour') : '';
+		var mins = ((totalSecs - (hours * $author$project$TimeEx$hourInSeconds)) / $author$project$TimeEx$minsInSeconds) | 0;
+		var minsStr = (mins > 0) ? _Utils_ap(
+			$elm$core$String$fromInt(mins),
+			(mins > 1) ? ' minutes' : ' minute') : '';
+		var secs = (totalSecs - (hours * $author$project$TimeEx$hourInSeconds)) - (mins * $author$project$TimeEx$minsInSeconds);
+		var secsStr = (secs > 0) ? _Utils_ap(
+			$elm$core$String$fromInt(secs),
+			(secs > 1) ? ' seconds' : ' second') : '';
+		return A2(
+			$elm$core$String$join,
+			' ',
+			A2(
+				$elm$core$List$filter,
+				A2($elm$core$Basics$composeR, $elm$core$String$isEmpty, $elm$core$Basics$not),
+				_List_fromArray(
+					[hoursStr, minsStr, secsStr])));
+	});
 var $author$project$Main$viewInfo = function (s) {
-	var durationInSecs = $elm$core$String$fromInt(
-		A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A3(
-				$elm$core$Maybe$map2,
-				F2(
-					function (start, end) {
-						return (($elm$time$Time$posixToMillis(end) - $elm$time$Time$posixToMillis(start)) / 1000) | 0;
-					}),
-				s.N,
-				s.L)));
+	var durationStr = A2(
+		$elm$core$Maybe$withDefault,
+		'',
+		A3($elm$core$Maybe$map2, $author$project$TimeEx$durationStr, s.N, s.L));
 	return s.G ? _List_fromArray(
 		[
 			$elm$html$Html$text(
-			'🎉🎉 Solved! (Attempts: ' + ($elm$core$String$fromInt(s.s) + (', Time: ' + (durationInSecs + ' seconds)'))))
+			'🎉🎉 Solved! (Attempts: ' + ($elm$core$String$fromInt(s.s) + (', Time: ' + (durationStr + ')'))))
 		]) : ((s.s > 0) ? _List_fromArray(
 		[
 			$elm$html$Html$text(
