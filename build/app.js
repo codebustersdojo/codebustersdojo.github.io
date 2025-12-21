@@ -6400,7 +6400,7 @@ var $author$project$ListEx$dedupe = function (items) {
 };
 var $author$project$Data$keywords = $elm$core$Array$fromList(
 	_List_fromArray(
-		['Add', 'Auth', 'Bits', 'Byte', 'Book', 'Box', 'Break', 'Brute', 'Bugs', 'Caesar', 'Cast', 'Chain', 'Char', 'Code', 'Con', 'Cover', 'Crack', 'Cross', 'Cube', 'Cycle', 'Data', 'Deck', 'Decode', 'Deep', 'DES', 'Digit', 'Disk', 'Div', 'Door', 'ECB', 'Encode', 'Enigma', 'Entry', 'Fax', 'Field', 'Figure', 'File', 'Gate', 'Hash', 'Hide', 'Hill', 'Hop', 'IV', 'Jazz', 'Jitter', 'Key', 'Keys', 'Layer', 'Len', 'Line', 'Link', 'Log', 'Logic', 'Loop', 'MAC', 'Map', 'Mark', 'Math', 'Meet', 'Melon', 'Mode', 'Mod', 'Mono', 'Msg', 'Nil', 'Nix', 'Noise', 'Nonce', 'Null', 'Pad', 'Pass', 'Pipe', 'Plan', 'Poly', 'Porta', 'Prep', 'Pub', 'RSA', 'Run', 'Rune', 'Salt', 'Scram', 'Seal', 'Sec', 'Secret', 'Send', 'Shift', 'Sign', 'Spy', 'Sub', 'Suite', 'Sync', 'Sym', 'Text', 'Trap', 'Vail', 'XOR', 'Zero', 'AES', 'Arc', 'Args', 'Atom', 'Band', 'Base', 'Batch', 'Bind', 'Blob', 'Block', 'Cipher', 'Close', 'Cloud', 'Combo', 'Comp', 'Core', 'Crc', 'Curve', 'Diffie', 'Digest', 'Diff', 'ECC', 'End', 'Engage', 'Equal', 'Evt', 'Flow', 'Func', 'Gamma', 'Gen', 'Hand', 'Head', 'Hex', 'Info', 'Input', 'Inte', 'Ip', 'Item', 'Join', 'Jump', 'Kb', 'Lck', 'Lead', 'Left', 'List', 'Lock', 'Mask', 'Max', 'Min', 'Mix', 'Msgid', 'Net', 'New', 'Next', 'Node', 'Open', 'Output', 'Pair', 'Param', 'Part', 'Path', 'Perm', 'Pin', 'Post', 'Priv', 'Proc', 'Prot', 'Prng', 'Psk', 'Pto', 'Rand', 'Recv', 'Reg', 'Rem', 'Rnd', 'Root', 'Seed', 'Select', 'Semi', 'Sha', 'Skip', 'Slice', 'Slot', 'Src', 'Start', 'Step', 'Stop', 'Tag', 'Tls', 'Token', 'Topo', 'Tup', 'Type', 'Udp', 'Unic', 'Url', 'Val', 'Var', 'Vector', 'Verify', 'View', 'Void', 'Wan', 'Word']));
+		['Add', 'Auth', 'Bits', 'Byte', 'Book', 'Box', 'Break', 'Brute', 'Bugs', 'Caesar', 'Cast', 'Chain', 'Char', 'Code', 'Con', 'Cover', 'Crack', 'Cross', 'Cube', 'Cycle', 'Data', 'Deck', 'Decode', 'Deep', 'DES', 'Digit', 'Disk', 'Div', 'Door', 'ECB', 'Encode', 'Enigma', 'Entry', 'Fax', 'Field', 'Figure', 'File', 'Gate', 'Hash', 'Hide', 'Hill', 'Hop', 'IV', 'Jazz', 'Jitter', 'Key', 'Keys', 'Layer', 'Len', 'Line', 'Link', 'Log', 'Logic', 'Loop', 'MAC', 'Map', 'Mark', 'Math', 'Meet', 'Melon', 'Mode', 'Mod', 'Mono', 'Msg', 'Nil', 'Nix', 'Noise', 'Nonce', 'Null', 'Pad', 'Pass', 'Pipe', 'Plan', 'Poly', 'Porta', 'Prep', 'Pub', 'RSA', 'Run', 'Rune', 'Salt', 'Scram', 'Seal', 'Sec', 'Secret', 'Send', 'Shift', 'Sign', 'Spy', 'Sub', 'Suite', 'Sync', 'Sym', 'Text', 'Trap', 'Vail', 'XOR', 'Zero', 'AES', 'Arc', 'Args', 'Atom', 'Band', 'Base', 'Batch', 'Bind', 'Blob', 'Block', 'Cipher', 'Close', 'Cloud', 'Combo', 'Comp', 'Core', 'Crc', 'Curve', 'Diffie', 'Digest', 'Diff', 'ECC', 'End', 'Engage', 'Equal', 'Evt', 'Flow', 'Func', 'Gamma', 'Gen', 'Hand', 'Head', 'Hex', 'Info', 'Input', 'Ip', 'Item', 'Join', 'Jump', 'Kb', 'Lck', 'Lead', 'Left', 'List', 'Lock', 'Mask', 'Max', 'Min', 'Mix', 'Msgid', 'Net', 'New', 'Next', 'Node', 'Open', 'Output', 'Pair', 'Param', 'Part', 'Path', 'Perm', 'Pin', 'Post', 'Priv', 'Proc', 'Prot', 'Prng', 'Psk', 'Pto', 'Rand', 'Recv', 'Reg', 'Rem', 'Rnd', 'Root', 'Seed', 'Select', 'Semi', 'Sha', 'Skip', 'Slice', 'Slot', 'Src', 'Start', 'Step', 'Stop', 'Tag', 'Tls', 'Token', 'Topo', 'Tup', 'Type', 'Udp', 'Unic', 'Url', 'Val', 'Var', 'Vector', 'Verify', 'View', 'Void', 'Wan', 'Word']));
 var $elm$core$Array$length = function (_v0) {
 	var len = _v0.a;
 	return len;
@@ -7576,15 +7576,19 @@ var $author$project$Interface$mutateLetter = F2(
 			return $author$project$Interface$Punctuation(d);
 		}
 	});
+var $author$project$Interface$mutateLetters = F2(
+	function (fn, ls) {
+		return A2(
+			$elm$core$List$map,
+			$author$project$Interface$mutateLetter(fn),
+			ls);
+	});
 var $author$project$Interface$mutateWord = F2(
 	function (fn, w) {
 		return _Utils_update(
 			w,
 			{
-				aP: A2(
-					$elm$core$List$map,
-					$author$project$Interface$mutateLetter(fn),
-					w.aP)
+				aP: A2($author$project$Interface$mutateLetters, fn, w.aP)
 			});
 	});
 var $author$project$Interface$mutate = F2(
@@ -7832,13 +7836,22 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
 				} else {
 					var s = m.a;
+					var words_ = A2($author$project$Interface$mutate, $author$project$Interface$clearGuess, s.a0);
+					var table_ = A2(
+						$elm$core$Maybe$map,
+						function (t) {
+							return _Utils_update(
+								t,
+								{
+									ae: A2($author$project$Interface$mutateLetters, $author$project$Interface$clearGuess, t.ae)
+								});
+						},
+						s.aY);
 					return _Utils_Tuple2(
 						$author$project$Main$Ready(
 							_Utils_update(
 								s,
-								{
-									a0: A2($author$project$Interface$mutate, $author$project$Interface$clearGuess, s.a0)
-								})),
+								{aY: table_, a0: words_})),
 						$elm$core$Platform$Cmd$none);
 				}
 			case 3:
